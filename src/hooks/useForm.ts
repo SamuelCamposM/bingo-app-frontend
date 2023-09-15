@@ -1,11 +1,16 @@
 import { useEffect, useState } from "react";
-import { FormProps, ValidationFunctionProps } from "../interfaces";
+import {
+  FieldProps,
+  IFormValues,
+  InitialUseFormProps,
+  ValidationFunctionProps,
+} from "../interfaces";
 
-export const useForm = (initialForm: FormProps) => {
+export const useForm = (initialForm: InitialUseFormProps) => {
   const [isFormInvalid, setisFormValid] = useState(true);
   const [isSubmited, setisSubmited] = useState(false);
 
-  const [formValues, setFormValues] = useState(
+  const [formValues, setFormValues] = useState<IFormValues>(
     Object.fromEntries(
       Object.entries(initialForm).map(([key, value]) => [
         key,
@@ -14,7 +19,7 @@ export const useForm = (initialForm: FormProps) => {
     )
   );
 
-  const [formData, setformData] = useState(
+  const [formData, setformData] = useState<FieldProps[]>(
     Object.values(initialForm).map((value) => ({
       ...value,
       validations: value.validations || [],
@@ -31,22 +36,24 @@ export const useForm = (initialForm: FormProps) => {
     let hayError = false;
     setformData(
       formData.map((itemForm) => {
-        const errores = itemForm.validations.map((validationFuntion) => {
-          const args: ValidationFunctionProps = {
-            value: formValues[itemForm.name],
-          };
-          const result = validationFuntion(args);
-          console.log(validationFuntion(args));
+        const errores = itemForm.validations
+          .map((validationFuntion) => {
+            const args: ValidationFunctionProps = {
+              value: formValues[itemForm.name],
+              // fields: formData,
+              // formValues: formValues,
+            };
+            const result = validationFuntion(args);
 
-          if (result) {
-            hayError = true;
-          }
-          return result;
-        });
+            if (result) {
+              hayError = true;
+            }
+            return result;
+          })
+          .filter((err) => err);
         return { ...itemForm, errores: isSubmited ? errores : [] };
       })
     );
-    console.log({ hayError });
 
     setisFormValid(hayError);
   };

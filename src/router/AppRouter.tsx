@@ -1,8 +1,10 @@
 import { useEffect } from "react";
 
 import { Routes, Route, Navigate } from "react-router-dom";
-import { LoginPage, MainPage } from "../pages";
+
 import { useAuthStore } from "../hooks";
+import { AuthRouter } from "../Auth";
+import { MainPage } from "../pages";
 
 export const AppRouter = () => {
   const { status, onStartSheckAuthToken } = useAuthStore();
@@ -16,7 +18,7 @@ export const AppRouter = () => {
     <Routes>
       {status === "not-authenticated" ? (
         <>
-          <Route path="/auth/*" element={<LoginPage />} />
+          <Route path="/auth/*" element={<AuthRouter />} />
           <Route path="/*" element={<Navigate to={"/auth/login"} />} />
         </>
       ) : (

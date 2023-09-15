@@ -7,30 +7,40 @@ export const required = ({ value }: ValidationFunctionProps) => {
   if (value.length === 0) {
     return `El campo es obligatorio`;
   }
-  return null; // Add this line
 };
 
-export const min = (value: string) => {
-  if (value.trim() === "" || value.length === 0) {
-    return `El campo ${"campo"} es obligatorio`;
+export const min = ({ value }: ValidationFunctionProps, number: number) => {
+  if (typeof value === "string" && value.trim().length < number) {
+    return `El campo es obligatorio`;
+  }
+  if (value.length < number) {
+    return `El campo es obligatorio`;
   }
 };
 
-export const max = (value: string) => {
-  if (value.trim() === "" || value.length === 0) {
-    return `El campo ${"campo"} es obligatorio`;
+export const max = ({ value }: ValidationFunctionProps) => {
+  if (typeof value === "string" && value.trim() === "") {
+    return `El campo es obligatorio`;
+  }
+  if (value.length === 0) {
+    return `El campo es obligatorio`;
   }
 };
 
-export const entre = (value: string) => {
-  if (value.trim() === "" || value.length === 0) {
-    return `El campo ${"campo"} es obligatorio`;
+export const entre = ({ value }: ValidationFunctionProps) => {
+  if (typeof value === "string" && value.trim() === "") {
+    return `El campo es obligatorio`;
+  }
+  if (value.length === 0) {
+    return `El campo es obligatorio`;
   }
 };
 
-export const validarEmail = (email: string) => {
-  if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)) {
+export const validarEmail = ({ value }: ValidationFunctionProps) => {
+  if (
+    typeof value === "string" &&
+    !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value)
+  ) {
     return "Invalid email format";
   }
-  return null;
 };

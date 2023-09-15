@@ -1,1 +1,1 @@
-export * from "./DinamicFormData";
+export * from "./DincamicForm/DinamicFormData";

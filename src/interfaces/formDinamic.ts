@@ -1,7 +1,11 @@
+//HOOK
+export interface IFormValues {
+  [k: string]: string | [string];
+}
 export interface ValidationFunctionProps {
   value: string | [string];
-  fields?: [FieldProps];
-  formValues?: { [k: string]: string };
+  fields?: FieldProps[];
+  formValues?: IFormValues;
 }
 
 export type ValidationFunction = (
@@ -9,14 +13,23 @@ export type ValidationFunction = (
 ) => string | undefined;
 
 export interface FieldProps {
-  tipo: string;
+  tipo: "campo" | "number" | "select" | "imagen" | "archivo" | "multiselect";
+  name: string;
+  label: string;
+  validations: Function[];
+  value: string;
+  errores: string[];
+}
+
+export interface InitialFieldProps {
+  tipo: "campo" | "number" | "select" | "imagen" | "archivo" | "multiselect";
   name: string;
   label: string;
   validations?: Function[];
   value?: string;
-  errores?: boolean[];
+  errores?: string[];
 }
 
-export interface FormProps {
-  [key: string]: FieldProps;
+export interface InitialUseFormProps {
+  [key: string]: InitialFieldProps;
 }
