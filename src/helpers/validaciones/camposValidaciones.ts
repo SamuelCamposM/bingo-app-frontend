@@ -1,12 +1,13 @@
 import { ValidationFunctionProps } from "../../interfaces";
 
-export const required = ({ value }: ValidationFunctionProps) => {
+export const required = (value: string | string[]) => {
   if (typeof value === "string" && value.trim() === "") {
     return `El campo es obligatorio`;
   }
   if (value.length === 0) {
     return `El campo es obligatorio`;
   }
+  return "";
 };
 
 export const min = ({ value }: ValidationFunctionProps, number: number) => {

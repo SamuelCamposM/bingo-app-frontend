@@ -15,7 +15,7 @@ export const LoginBox = styled(Box)(({ theme }) => ({
       left: 0,
     },
     position: "relative",
-    width: "50%",
+    width: "65%",
     height: "100%",
     ":before": {
       content: '""',
@@ -24,7 +24,7 @@ export const LoginBox = styled(Box)(({ theme }) => ({
       left: 0,
       height: "100%",
       width: "100%",
-      background: `linear-gradient(225deg, ${theme.palette.primary.light}, ${theme.palette.secondary.dark})`,
+      // background: `linear-gradient(225deg, ${theme.palette.primary.light}, ${theme.palette.secondary.dark})`,
       zIndex: 1,
       mixBlendMode: "screen",
     },
@@ -38,12 +38,17 @@ export const LoginBox = styled(Box)(({ theme }) => ({
     },
   },
   ".contentBx": {
-    "@media (max-width: 768px)": { width: "100%", zIndex: 1 },
+    "@media (max-width: 768px)": {
+      width: "100%",
+      zIndex: 1,
+      background: agregarTransparencia(theme.palette.secondary.dark, 0.0),
+    },
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    width: "50%",
+    width: "35%",
     height: "100%",
+    background: agregarTransparencia(theme.palette.secondary.dark, 0.9),
     ".formBx": {
       "@media (max-width: 768px)": {
         padding: "40px",
@@ -51,7 +56,7 @@ export const LoginBox = styled(Box)(({ theme }) => ({
         background: agregarTransparencia(theme.palette.secondary.dark, 0.9),
         margin: "40px",
       },
-      width: "50%",
+      width: "80%",
       h2: {
         fontWeight: "600",
         fontSize: "1.5rem",

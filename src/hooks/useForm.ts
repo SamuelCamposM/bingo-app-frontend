@@ -1,72 +1,79 @@
-import { useEffect, useState } from "react";
-import {
-  FieldProps,
-  IFormValues,
-  InitialUseFormProps,
-  ValidationFunctionProps,
-} from "../interfaces";
+import { ChangeEvent, useCallback, useEffect, useState } from "react";
 
-export const useForm = (initialForm: InitialUseFormProps) => {
-  const [isFormInvalid, setisFormValid] = useState(true);
+export type ValidationFunction = (value: string | string[]) => string;
+
+export interface Config {
+  validations: ValidationFunction[];
+  errores: string[];
+}
+
+export const useForm = <
+  ValueTypes extends Record<string, string | string[]>,
+  ConfigTypes extends Record<string, Config>
+>(
+  InitialValues: ValueTypes,
+  config: ConfigTypes
+) => {
+  const [formValues, setformValues] = useState(InitialValues);
+  const [configValues, setconfigValues] = useState(config);
   const [isSubmited, setisSubmited] = useState(false);
+  const [isFormInvalid, setisFormInvalid] = useState(false);
+  const [onBlur, setonBlur] = useState(0);
 
-  const [formValues, setFormValues] = useState<IFormValues>(
-    Object.fromEntries(
-      Object.entries(initialForm).map(([key, value]) => [
-        key,
-        value.value || "",
-      ])
-    )
-  );
+  const onResetForm = useCallback(() => {
+    setformValues(InitialValues);
+    setconfigValues(config);
+    setisSubmited(false);
+    setisFormInvalid(false);
+    setonBlur(0);
+  }, []);
 
-  const [formData, setformData] = useState<FieldProps[]>(
-    Object.values(initialForm).map((value) => ({
-      ...value,
-      validations: value.validations || [],
-      value: "",
-      errores: [] as string[],
-    }))
-  );
+  const handleBlur = useCallback(() => {
+    setonBlur((prev) => prev + 1);
+  }, []);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormValues({ ...formValues, [e.target.name]: e.target.value });
-  };
+  const handleChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setformValues((prevValues) => ({
+      ...prevValues,
+      [name]: value,
+    }));
+  }, []);
 
   const pasandoValidaciones = () => {
-    let hayError = false;
-    setformData(
-      formData.map((itemForm) => {
-        const errores = itemForm.validations
-          .map((validationFuntion) => {
-            const args: ValidationFunctionProps = {
-              value: formValues[itemForm.name],
-              // fields: formData,
-              // formValues: formValues,
-            };
-            const result = validationFuntion(args);
+    setconfigValues((prev) => {
+      let hayError: boolean = false;
+      const res = Object.entries(prev).map(([name, field]) => {
+        const errores = field.validations
+          .map((validation) => {
+            const result = validation(formValues[name]);
 
             if (result) {
               hayError = true;
             }
             return result;
           })
-          .filter((err) => err);
-        return { ...itemForm, errores: isSubmited ? errores : [] };
-      })
-    );
+          .filter((err) => err !== "");
 
-    setisFormValid(hayError);
+        field.errores = isSubmited ? errores : [];
+        return [name, field];
+      });
+      setisFormInvalid(hayError);
+      return Object.fromEntries(res);
+    });
   };
+
   useEffect(() => {
     pasandoValidaciones();
-  }, [isSubmited, formValues]);
+  }, [isSubmited, onBlur]);
 
   return {
-    formData,
-    formValues,
     handleChange,
-    isFormInvalid,
     setisSubmited,
-    isSubmited,
+    isFormInvalid,
+    formValues,
+    configValues,
+    handleBlur,
+    onResetForm,
   };
 };
