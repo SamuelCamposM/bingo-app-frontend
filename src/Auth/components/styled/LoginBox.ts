@@ -1,6 +1,6 @@
 import { styled } from "@mui/system";
 import { Box } from "@mui/material";
-import { agregarTransparencia } from "../../../helpers/agregarTransparencia";
+import { agregarTransparencia } from "../../../helpers";
 
 export const LoginBox = styled(Box)(({ theme }) => ({
   position: "relative",

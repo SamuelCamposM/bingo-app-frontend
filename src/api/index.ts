@@ -1,1 +1,1 @@
-export { default as calendarApi } from "./calendarApi";
+export { default as chatApi } from "./chatApi";

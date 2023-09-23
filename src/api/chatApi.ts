@@ -1,20 +1,14 @@
 import axios, { AxiosRequestHeaders } from "axios";
-import { getEnvVariables } from "../helpers";
-
-interface EnvVariables {
-  VITE_API_URL: string;
-}
+import { getEnvVariables, EnvVariables } from "../helpers";
 
 const { VITE_API_URL } = getEnvVariables() as unknown as EnvVariables;
 
-const calendarApi = axios.create({
-  baseURL: VITE_API_URL,
+const chatApi = axios.create({
+  baseURL: VITE_API_URL + "api",
 });
 
 //todo: CONFIGURAR INTERCEPTORES
-calendarApi.interceptors.request.use((config) => {
-  console.log(localStorage.getItem("token"));
-
+chatApi.interceptors.request.use((config) => {
   config.headers = {
     ...config.headers,
     "x-token": localStorage.getItem("token") || "",
@@ -22,4 +16,4 @@ calendarApi.interceptors.request.use((config) => {
   return config;
 });
 
-export default calendarApi;
+export default chatApi;

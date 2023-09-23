@@ -1,7 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AuthState, User } from "../../interfaces";
 
-
 const initialState: AuthState = {
   status: "checking",
   user: {}, // You might want to replace this with a proper initial value
@@ -14,7 +13,6 @@ export const authSlice = createSlice({
   reducers: {
     onSlicechecking: (state /* action */) => {
       state.status = "checking";
-      state.user = {}; // You might want to replace this with a proper initial value
       state.errorMessage = undefined;
     },
     onSliceLogin: (state, action: PayloadAction<User>) => {

@@ -44,4 +44,5 @@ export const validarEmail = ({ value }: ValidationFunctionProps) => {
   ) {
     return "Invalid email format";
   }
+  return "";
 };

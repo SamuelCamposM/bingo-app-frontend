@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { calendarApi } from "../api";
+import { chatApi } from "../api";
 import {
   clearErrorMessage,
   onSliceLogin,
@@ -17,7 +17,7 @@ export const useAuthStore = () => {
   const onStartLogin = async ({ email, password }: LoginParams) => {
     dispatch(onSlicechecking());
     try {
-      const { data } = await calendarApi.post("/auth", { email, password });
+      const { data } = await chatApi.post("/auth", { email, password });
       localStorage.setItem("token", data.token);
       localStorage.setItem("token-init-data", String(new Date().getTime()));
 
@@ -32,7 +32,7 @@ export const useAuthStore = () => {
   const onStartRegister = async ({ name, email, password }: RegisterParams) => {
     dispatch(onSlicechecking());
     try {
-      const { data } = await calendarApi.post("/auth/new", {
+      const { data } = await chatApi.post("/auth/new", {
         name,
         email,
         password,
@@ -51,7 +51,7 @@ export const useAuthStore = () => {
     const token = localStorage.getItem("token");
     if (!token) return dispatch(onSliceLogout(undefined));
     try {
-      const { data } = await calendarApi.get("/auth/renew");
+      const { data } = await chatApi.get("/auth/renew");
       localStorage.setItem("token", data.token);
       localStorage.setItem("token-init-data", String(new Date().getTime()));
 
