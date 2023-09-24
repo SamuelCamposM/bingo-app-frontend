@@ -1,16 +1,18 @@
+import { useAuthStore, useChatStore } from "../../../../hooks";
 import { IncomingMessage, OutgoingMessage, SendMessage } from "./";
-
 export const Messages = () => {
-  const msgs = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  const { mensajes } = useChatStore();
+  const { user } = useAuthStore();
+
   return (
     <div className="mesgs">
       {/* <!-- Historia inicio --> */}
-      <div className="msg_history">
-        {msgs.map((msg) =>
-          msg % 2 ? (
-            <IncomingMessage key={msg} />
+      <div className="msg_history" id="mensajes">
+        {mensajes.map((msg) =>
+          user.uid === msg.para ? (
+            <IncomingMessage key={msg._id} msg={msg} />
           ) : (
-            <OutgoingMessage key={msg} />
+            <OutgoingMessage key={msg._id} msg={msg} />
           )
         )}
       </div>

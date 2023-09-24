@@ -1,9 +1,14 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { AuthState, User } from "../../interfaces";
+import { User, AuthState } from "../interfaces";
 
 const initialState: AuthState = {
   status: "checking",
-  user: {}, // You might want to replace this with a proper initial value
+  user: {
+    name: "",
+    email: "",
+    online: false,
+    uid: "",
+  }, // You might want to replace this with a proper initial value
   errorMessage: undefined,
 };
 
@@ -22,7 +27,7 @@ export const authSlice = createSlice({
     },
     onSliceLogout: (state, action: PayloadAction<string | undefined>) => {
       state.status = "not-authenticated";
-      state.user = {}; // You might want to replace this with a proper initial value
+      state.user = initialState.user; // You might want to replace this with a proper initial value
       state.errorMessage = action.payload;
     },
     clearErrorMessage: (state) => {

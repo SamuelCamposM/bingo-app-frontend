@@ -1,12 +1,14 @@
+import { useChatStore } from "../../../hooks";
 import { ChatSelect, InboxPeople, Messages } from "./Components";
 
 import "./index.css";
 export const Chat = () => {
+  const { chatActivo } = useChatStore();
   return (
-    <div className="inbox_msg">
+    <>
       <InboxPeople />
-      {true ? <ChatSelect /> : <Messages />}
-    </div>
+      {chatActivo ? <Messages /> : <ChatSelect />}{" "}
+    </>
   );
 };
 

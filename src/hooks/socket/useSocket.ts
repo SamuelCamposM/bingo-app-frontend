@@ -27,10 +27,14 @@ export const useSocket = (serverPath: string) => {
   }, [socket]);
 
   useEffect(() => {
-    socket?.on("disconnect", () => setonline(false));
+    socket?.on("disconnect", () => {
+      setonline(false);
+    });
   }, []);
   useEffect(() => {
-    socket?.on("connect", () => setonline(true));
+    socket?.on("connect", () => {
+      setonline(true);
+    });
   }, []);
   return { socket, online, conectarSocket, desconectarSocket };
 };

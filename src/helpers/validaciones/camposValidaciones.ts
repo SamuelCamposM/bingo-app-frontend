@@ -1,4 +1,4 @@
-import { ValidationFunctionProps } from "../../interfaces";
+import { ValidationFunctionProps } from "../../store/interfaces/root";
 
 export const required = (value: string | string[]) => {
   if (typeof value === "string" && value.trim() === "") {

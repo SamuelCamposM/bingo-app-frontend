@@ -1,6 +1,6 @@
 import { createTheme } from "@mui/material";
 import { red, blueGrey, purple } from "@mui/material/colors";
-import { User } from "../interfaces";
+import { User } from "../store/interfaces";
 export const purpleTheme = (user: User) => {
   return createTheme({
     palette: {

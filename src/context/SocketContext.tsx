@@ -1,8 +1,10 @@
 import { createContext } from "react";
-import { useAuthStore, useSocket } from "../hooks";
+import { useAuthStore, useChatStore, useSocket } from "../hooks";
 import { Socket } from "socket.io-client";
 import { getEnvVariables, EnvVariables } from "../helpers";
 import { useEffect } from "react";
+import { Mensaje } from "../store/interfaces";
+import { scrollToBottomAnimated } from "../App/helpers";
 
 export const SocketContext = createContext({
   socket: null as Socket | null,
@@ -16,16 +18,30 @@ export const SocketProvider = ({ children }: { children: JSX.Element }) => {
     useSocket(VITE_API_URL);
   const { status } = useAuthStore();
 
+  const { onCargarUsuarios, onAddMessage } = useChatStore();
   useEffect(() => {
     if (status === "authenticated") {
       conectarSocket();
     }
   }, [status]);
+
   useEffect(() => {
     if (status === "not-authenticated") {
       desconectarSocket();
     }
   }, [status]);
+
+  useEffect(() => {
+    socket?.on("lista-usuarios", (data) => {
+      onCargarUsuarios(data);
+    });
+  }, [socket]);
+  useEffect(() => {
+    socket?.on("mensaje-personal", async (mensaje: Mensaje) => {
+      await onAddMessage(mensaje);
+      scrollToBottomAnimated("mensajes");
+    });
+  }, [socket]);
   return (
     <SocketContext.Provider value={{ socket, online }}>
       {children}

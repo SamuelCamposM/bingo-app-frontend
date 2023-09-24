@@ -1,13 +1,15 @@
 import { useDispatch, useSelector } from "react-redux";
-import { chatApi } from "../api";
+import { chatApi } from "../../api";
 import {
   clearErrorMessage,
   onSliceLogin,
   onSliceLogout,
   onSlicechecking,
-} from "../store/auth/authSlice";
-import { LoginParams, RegisterParams, RootState } from "../interfaces";
-
+} from "../../store";
+import { LoginParams, RegisterParams, RootState, User } from "../../store/interfaces";
+interface UserWithToken extends User {
+  token: string;
+}
 export const useAuthStore = () => {
   const { status, user, errorMessage } = useSelector(
     (state: RootState) => state.auth
@@ -17,11 +19,15 @@ export const useAuthStore = () => {
   const onStartLogin = async ({ email, password }: LoginParams) => {
     dispatch(onSlicechecking());
     try {
-      const { data } = await chatApi.post("/auth", { email, password });
-      localStorage.setItem("token", data.token);
+      const {
+        data: { token, ...usuarioSinToken },
+      }: { data: UserWithToken } = await chatApi.post("/auth", {
+        email,
+        password,
+      });
+      localStorage.setItem("token", token);
       localStorage.setItem("token-init-data", String(new Date().getTime()));
-
-      dispatch(onSliceLogin({ uid: data.uid, name: data.name }));
+      dispatch(onSliceLogin(usuarioSinToken));
     } catch (error) {
       dispatch(onSliceLogout("Credenciales incorrectas"));
       setTimeout(() => {
@@ -29,17 +35,20 @@ export const useAuthStore = () => {
       }, 10);
     }
   };
+  
   const onStartRegister = async ({ name, email, password }: RegisterParams) => {
     dispatch(onSlicechecking());
     try {
-      const { data } = await chatApi.post("/auth/new", {
+      const {
+        data: { token, ...usuarioSinToken },
+      }: { data: UserWithToken } = await chatApi.post("/auth/new", {
         name,
         email,
         password,
       });
-      localStorage.setItem("token", data.token);
+      localStorage.setItem("token", token);
       localStorage.setItem("token-init-data", String(new Date().getTime()));
-      dispatch(onSliceLogin({ uid: data.uid, name: data.name }));
+      dispatch(onSliceLogin(usuarioSinToken));
     } catch (error: any) {
       dispatch(onSliceLogout(error.response?.data?.msg));
       setTimeout(() => {
@@ -47,15 +56,18 @@ export const useAuthStore = () => {
       }, 10);
     }
   };
+
   const onStartSheckAuthToken = async () => {
     const token = localStorage.getItem("token");
     if (!token) return dispatch(onSliceLogout(undefined));
     try {
-      const { data } = await chatApi.get("/auth/renew");
-      localStorage.setItem("token", data.token);
+      const {
+        data: { token, ...usuarioSinToken },
+      } = await chatApi.get("/auth/renew");
+      localStorage.setItem("token", token);
       localStorage.setItem("token-init-data", String(new Date().getTime()));
 
-      dispatch(onSliceLogin({ uid: data.uid, name: data.name }));
+      dispatch(onSliceLogin(usuarioSinToken));
     } catch (error) {
       localStorage.clear();
       dispatch(onSliceLogout(undefined));
@@ -66,6 +78,7 @@ export const useAuthStore = () => {
     localStorage.clear();
     dispatch(onSliceLogout(undefined));
   };
+
   return {
     //*Propiedades
     status,

@@ -7,9 +7,9 @@ import { required } from "../../helpers";
 import { Link } from "react-router-dom";
 
 interface RegisterInterface {
-  [key: string]: string | string[]; 
+  [key: string]: string | string[];
   email: string;
-  password: string; 
+  password: string;
 }
 
 export const LoginPage = () => {
@@ -23,14 +23,7 @@ export const LoginPage = () => {
 
   const config = useMemo(
     () => ({
-      password: [
-        (a: string | string[], b: RegisterInterface) => {
-          if (a !== b.email) {
-            return "Las contraseñas no coinciden";
-          }
-          return "";
-        },
-      ],
+      password: [required],
 
       email: [required],
     }),
@@ -48,6 +41,9 @@ export const LoginPage = () => {
   const loginSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setisSubmited(true);
+    if (isFormInvalid) {
+      return;
+    }
     onStartLogin({ email: formValues.email, password: formValues.password });
   };
   useEffect(() => {

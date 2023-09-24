@@ -64,7 +64,6 @@ export const Appbar = () => {
           >
             {user.name}
           </Typography>
-
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
               size="large"
@@ -136,7 +135,7 @@ export const Appbar = () => {
               </NavLink>
             ))}
           </Box>
-
+          {user.email}
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>

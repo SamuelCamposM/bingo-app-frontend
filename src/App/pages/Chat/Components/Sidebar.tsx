@@ -1,12 +1,15 @@
 import { SidebarItem } from "./SidebarItem";
-
+import { useAuthStore, useChatStore } from "../../../../hooks";
 export const Sidebar = () => {
-  const chats = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+  const { usuarios } = useChatStore();
+  const { user } = useAuthStore();
   return (
     <div className="inbox_chat">
-      {chats.map((chat) => (
-        <SidebarItem key={chat} />
-      ))}
+      {usuarios
+        .filter((usuario) => usuario.uid !== user.uid)
+        .map((usuario) => (
+          <SidebarItem key={usuario.uid} usuario={usuario} />
+        ))}
       {/* <!-- Espacio extra para scroll --> */}
       <div className="extra_space"></div>
     </div>
