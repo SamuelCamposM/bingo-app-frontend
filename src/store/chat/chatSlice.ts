@@ -1,5 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { ChatState, Mensaje, User } from "../interfaces";
+import { onSliceLogout } from "..";
 
 const initialState: ChatState = {
   chatActivo: null,
@@ -32,6 +33,9 @@ export const chatSlice = createSlice({
     onSliceGetMensajes: (state, action: PayloadAction<Mensaje[]>) => {
       state.mensajes = action.payload;
     },
+  },
+  extraReducers(builder) {
+    builder.addCase(onSliceLogout, () => initialState);
   },
 });
 

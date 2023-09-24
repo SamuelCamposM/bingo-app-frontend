@@ -12,18 +12,18 @@ export const SendMessage = () => {
     formValues,
     handleChange,
     handleBlur,
-    isFormInvalid,
     errorValues,
     onResetForm,
     setisSubmited,
+    isFormInvalidSubmit,
   } = useForm({ mensaje: "" }, { mensaje: [required] });
-  const { mensaje } = formValues;
 
+  const { mensaje } = formValues;
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     handleBlur();
     setisSubmited(true);
-    if (isFormInvalid) {
+    if (isFormInvalidSubmit(formValues)) {
       return;
     }
     onResetForm();

@@ -30,11 +30,12 @@ export const useSocket = (serverPath: string) => {
     socket?.on("disconnect", () => {
       setonline(false);
     });
-  }, []);
+  }, [socket]);
   useEffect(() => {
+    setonline(socket?.connected!);
     socket?.on("connect", () => {
       setonline(true);
     });
-  }, []);
+  }, [socket]);
   return { socket, online, conectarSocket, desconectarSocket };
 };

@@ -8,7 +8,7 @@ export const useForm = <
   >
 >(
   InitialValues: ValueTypes,
-  config: ConfigTypes
+  ObjectValidations: ConfigTypes
 ) => {
   const [formValues, setformValues] = useState(InitialValues);
   const [isSubmited, setisSubmited] = useState(false);
@@ -16,10 +16,10 @@ export const useForm = <
   const [onBlur, setonBlur] = useState(0);
 
   const errorValues = useMemo<Record<keyof ConfigTypes, string[]>>(() => {
-    const entries = Object.entries(config);
+    const entries = Object.entries(ObjectValidations);
     let hayError = false;
     const res = entries.map(([name]) => {
-      const errores = config[name]
+      const errores = ObjectValidations[name]
         .map((validation) => {
           const result = validation(formValues[name], formValues);
 
@@ -36,6 +36,17 @@ export const useForm = <
 
     return Object.fromEntries(res);
   }, [onBlur, isSubmited]);
+
+  const isFormInvalidSubmit = useCallback((formValues: ValueTypes) => {
+    const entries = Object.entries(ObjectValidations);
+    const res = entries.some(([name]) => {
+      return ObjectValidations[name].some((validation) => {
+        const result = validation(formValues[name], formValues);
+        return result !== "";
+      });
+    });
+    return res;
+  }, []);
 
   const onResetForm = useCallback(() => {
     setformValues(InitialValues);
@@ -63,5 +74,6 @@ export const useForm = <
     errorValues,
     handleBlur,
     onResetForm,
+    isFormInvalidSubmit,
   };
 };

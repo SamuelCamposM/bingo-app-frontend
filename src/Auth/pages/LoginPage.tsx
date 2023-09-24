@@ -13,6 +13,8 @@ interface RegisterInterface {
 }
 
 export const LoginPage = () => {
+  console.log("render");
+
   const initialValues = useMemo<RegisterInterface>(
     () => ({
       email: "",
@@ -37,13 +39,16 @@ export const LoginPage = () => {
     setisSubmited,
     isFormInvalid,
     handleBlur,
+    isFormInvalidSubmit,
   } = useForm(initialValues, config);
   const loginSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setisSubmited(true);
-    if (isFormInvalid) {
+    handleBlur();
+    if (isFormInvalidSubmit(formValues)) {
       return;
     }
+
     onStartLogin({ email: formValues.email, password: formValues.password });
   };
   useEffect(() => {
@@ -63,7 +68,7 @@ export const LoginPage = () => {
           onChange={handleChange}
           name="email"
           error={errorValues.email.length > 0}
-          helperText={errorValues.email.map((error) => error)}
+          helperText={errorValues.email.join(" - ")}
           onBlur={handleBlur}
         />
 
@@ -74,7 +79,7 @@ export const LoginPage = () => {
           onChange={handleChange}
           name="password"
           error={errorValues.password.length > 0}
-          helperText={errorValues.password.map((error) => error)}
+          helperText={errorValues.password.join(" - ")}
           onBlur={handleBlur}
         />
         <Button variant="contained" color="primary" fullWidth type="submit">

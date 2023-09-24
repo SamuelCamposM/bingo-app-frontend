@@ -15,10 +15,12 @@ import AdbIcon from "@mui/icons-material/Adb";
 import { useAuthStore } from "../../../hooks";
 import { NavLink } from "react-router-dom";
 import { routes } from "../../router/routes";
+import { useProvideSocket } from "../../../hooks/socket/useProvideSocket";
 
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 export const Appbar = () => {
+  const { online } = useProvideSocket();
   const { onStartLogout, user } = useAuthStore();
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
@@ -62,7 +64,7 @@ export const Appbar = () => {
               textDecoration: "none",
             }}
           >
-            {user.name}
+            {user.name} {online ? "online" : "off - online"}
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton

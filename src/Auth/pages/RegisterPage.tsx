@@ -58,11 +58,15 @@ export const RegisterPage = () => {
     setisSubmited,
     isFormInvalid,
     handleBlur,
+    isFormInvalidSubmit,
   } = useForm(initialValues, config);
   const { email, name, password, password2 } = formValues;
   const loginSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setisSubmited(true);
+    if (isFormInvalidSubmit(formValues)) {
+      return;
+    }
     onStartRegister({ email, name, password });
   };
   useEffect(() => {
@@ -82,7 +86,7 @@ export const RegisterPage = () => {
           onChange={handleChange}
           name="name"
           error={errorValues.name.length > 0}
-          helperText={errorValues.name.map((error) => error)}
+          helperText={errorValues.name.join(" - ")}
           onBlur={handleBlur}
         />
         <TextField
@@ -92,7 +96,7 @@ export const RegisterPage = () => {
           onChange={handleChange}
           name="email"
           error={errorValues.email.length > 0}
-          helperText={errorValues.email.map((error) => error)}
+          helperText={errorValues.email.join(" - ")}
           onBlur={handleBlur}
         />
         <TextField
@@ -102,7 +106,7 @@ export const RegisterPage = () => {
           onChange={handleChange}
           name="password"
           error={errorValues.password.length > 0}
-          helperText={errorValues.password.map((error) => error)}
+          helperText={errorValues.password.join(" - ")}
           onBlur={handleBlur}
         />
         <TextField
@@ -112,7 +116,7 @@ export const RegisterPage = () => {
           onChange={handleChange}
           name="password2"
           error={errorValues.password2.length > 0}
-          helperText={errorValues.password2.map((error) => error)}
+          helperText={errorValues.password2.join(" - ")}
           onBlur={handleBlur}
         />
         <Button variant="contained" color="primary" fullWidth type="submit">
