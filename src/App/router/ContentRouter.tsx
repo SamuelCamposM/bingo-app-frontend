@@ -7,7 +7,7 @@ export const ContentRouter = () => {
         <Route key={path} path={path} element={<Component />} />
       ))}
       {/* Aquí se redirige a la primera página si la ruta no coincide */}
-      <Route path="*" element={<Navigate replace to="chat" />} />
+      <Route path="*" element={<Navigate replace to="page2" />} />
     </Routes>
   );
 };

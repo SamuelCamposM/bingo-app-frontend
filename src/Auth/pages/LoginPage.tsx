@@ -13,8 +13,6 @@ interface RegisterInterface {
 }
 
 export const LoginPage = () => {
-  console.log("render");
-
   const initialValues = useMemo<RegisterInterface>(
     () => ({
       email: "",

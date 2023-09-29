@@ -1,8 +1,13 @@
 import { useAuthStore, useChatStore } from "../../../../hooks";
+import { scrollToBottom } from "../../../helpers";
 import { IncomingMessage, OutgoingMessage, SendMessage } from "./";
+import { useEffect } from "react";
 export const Messages = () => {
   const { mensajes } = useChatStore();
   const { user } = useAuthStore();
+  useEffect(() => {
+    scrollToBottom("mensajes");
+  }, [mensajes]);
 
   return (
     <div className="mesgs">

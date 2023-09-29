@@ -1,7 +1,6 @@
 import { createTheme } from "@mui/material";
 import { red, blueGrey, purple } from "@mui/material/colors";
-import { User } from "../store/interfaces";
-export const purpleTheme = (user: User) => {
+export const purpleTheme = () => {
   return createTheme({
     palette: {
       mode: "dark",
@@ -11,6 +10,7 @@ export const purpleTheme = (user: User) => {
         main: red[400],
       },
     },
+
     typography: {
       allVariants: { color: "white" },
     },

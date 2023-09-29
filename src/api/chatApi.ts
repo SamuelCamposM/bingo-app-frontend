@@ -1,7 +1,7 @@
 import axios, { AxiosRequestHeaders } from "axios";
 import { getEnvVariables, EnvVariables } from "../helpers";
 
-const { VITE_API_URL } = getEnvVariables() as unknown as EnvVariables;
+const { VITE_API_URL } = getEnvVariables() as EnvVariables;
 
 const chatApi = axios.create({
   baseURL: VITE_API_URL + "api",

@@ -8,6 +8,7 @@ interface Route {
   path: string;
   Component: LazyExoticComponent<JSXComponent> | JSXComponent;
   name: string;
+  ocultar: boolean;
 }
 
 const ChatPage = lazy(() => import("../pages/Chat/ChatPage"));
@@ -22,17 +23,20 @@ export const routes: Route[] = [
     path: "chat",
     Component: ChatPage,
     name: "Chat",
+    ocultar: true,
   },
   {
     to: "page2",
     path: "page2",
     Component: Page2,
     name: "Page2",
+    ocultar: false,
   },
   {
     to: "page3",
     path: "page3",
     Component: Page3,
     name: "Page3",
+    ocultar: false,
   },
 ];

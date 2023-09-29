@@ -2,8 +2,3 @@ export * from "./IncomingMessage";
 export * from "./Messages";
 export * from "./OutgoingMessage";
 export * from "./SendMessage";
-export * from "./Sidebar";
-export * from "./SidebarItem";
-export * from "./InboxPeople";
-export * from "./SearchBox";
-export * from "./ChatSelect";

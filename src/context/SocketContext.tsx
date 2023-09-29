@@ -3,15 +3,14 @@ import { useAuthStore, useChatStore, useSocket } from "../hooks";
 import { Socket } from "socket.io-client";
 import { getEnvVariables, EnvVariables } from "../helpers";
 import { useEffect } from "react";
-import { Mensaje } from "../store/interfaces";
-import { scrollToBottomAnimated } from "../App/helpers";
+import { Mensaje } from "../store/interfaces"; 
 
 export const SocketContext = createContext({
   socket: null as Socket | null,
   online: false,
 });
 
-const { VITE_API_URL } = getEnvVariables() as unknown as EnvVariables;
+const { VITE_API_URL } = getEnvVariables() as EnvVariables;
 
 export const SocketProvider = ({ children }: { children: JSX.Element }) => {
   const { socket, online, conectarSocket, desconectarSocket } =
@@ -37,9 +36,8 @@ export const SocketProvider = ({ children }: { children: JSX.Element }) => {
     });
   }, [socket]);
   useEffect(() => {
-    socket?.on("mensaje-personal", async (mensaje: Mensaje) => {
-      await onAddMessage(mensaje);
-      scrollToBottomAnimated("mensajes");
+    socket?.on("mensaje-personal", (mensaje: Mensaje) => {
+      onAddMessage(mensaje);
     });
   }, [socket]);
   return (

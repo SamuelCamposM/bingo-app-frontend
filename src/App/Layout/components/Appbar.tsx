@@ -12,7 +12,7 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
-import { useAuthStore } from "../../../hooks";
+import { useAuthStore, useUiStore } from "../../../hooks";
 import { NavLink } from "react-router-dom";
 import { routes } from "../../router/routes";
 import { useProvideSocket } from "../../../hooks/socket/useProvideSocket";
@@ -22,6 +22,7 @@ const settings = ["Profile", "Account", "Dashboard", "Logout"];
 export const Appbar = () => {
   const { online } = useProvideSocket();
   const { onStartLogout, user } = useAuthStore();
+  const { onToogleDrawerChat } = useUiStore();
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
@@ -95,13 +96,18 @@ export const Appbar = () => {
                 display: { xs: "block", md: "none" },
               }}
             >
-              {routes.map(({ to, name }) => (
-                <NavLink key={name} to={to}>
-                  <MenuItem onClick={handleCloseNavMenu}>
-                    <Typography textAlign="center">{name}</Typography>
-                  </MenuItem>
-                </NavLink>
-              ))}
+              {routes
+                .filter(({ ocultar }) => !ocultar)
+                .map(({ to, name }) => (
+                  <NavLink key={name} to={to}>
+                    <MenuItem onClick={handleCloseNavMenu}>
+                      <Typography textAlign="center">{name}</Typography>
+                    </MenuItem>
+                  </NavLink>
+                ))}
+              <MenuItem onClick={handleCloseNavMenu}>
+                <Typography textAlign="center">Chat</Typography>
+              </MenuItem>
             </Menu>
           </Box>
           <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
@@ -124,20 +130,27 @@ export const Appbar = () => {
             LOGO
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {routes.map(({ to, name }) => (
-              <NavLink
-                onClick={handleCloseNavMenu}
-                style={{ textDecoration: "none" }}
-                key={name}
-                to={to}
-              >
-                <Button sx={{ my: 2, color: "white", display: "block" }}>
-                  {name}
-                </Button>
-              </NavLink>
-            ))}
+            <Button
+              sx={{ my: 2, color: "white", display: "block" }}
+              onClick={onToogleDrawerChat}
+            >
+              Chat
+            </Button>
+            {routes
+              .filter(({ ocultar }) => !ocultar)
+              .map(({ to, name }) => (
+                <NavLink
+                  onClick={handleCloseNavMenu}
+                  style={{ textDecoration: "none" }}
+                  key={name}
+                  to={to}
+                >
+                  <Button sx={{ my: 2, color: "white", display: "block" }}>
+                    {name}
+                  </Button>
+                </NavLink>
+              ))}
           </Box>
-          {user.email}
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>

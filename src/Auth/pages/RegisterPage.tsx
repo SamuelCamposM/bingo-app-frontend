@@ -3,7 +3,7 @@ import { useAuthStore, useForm } from "../../hooks";
 import Button from "@mui/material/Button";
 import { AuthLayout } from "../Layout/AuthLayout";
 import { useMemo, useEffect } from "react";
-import { required } from "../../helpers";
+import { required, validarEmail } from "../../helpers";
 import { Link } from "react-router-dom";
 
 interface RegisterInterface {
@@ -28,7 +28,7 @@ export const RegisterPage = () => {
   const config = useMemo(
     () => ({
       name: [required],
-      email: [required],
+      email: [required, validarEmail],
       password: [
         required,
         (a: string | string[], b: RegisterInterface) => {
