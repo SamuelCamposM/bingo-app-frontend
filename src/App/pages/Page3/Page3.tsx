@@ -62,7 +62,7 @@ function createData(
 
 const rows = [createData("India", "IN", 1324171354, 3287263)];
 for (let i = 0; i < 500; i++) {
-  rows.push(createData(`Gingerbread ${i + 1}`, "356", 16.0, 49));
+  rows.push(createData(`Gingerbread ${i + 1}`, "15", 16.0, 56));
 }
 
 export const Page3 = () => {
@@ -82,14 +82,14 @@ export const Page3 = () => {
 
   return (
     <Paper sx={{ width: "100%", height: `100%` }}>
-      <TableContainer sx={{ height: `calc(100% - 58px)` }}>
-        <Table stickyHeader aria-label="sticky table">
+      <TableContainer sx={{ height: `calc(100% - 52px)` }}>
+        <Table size="small" stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
               {columns.map((column) => (
                 <TableCell
                   sx={{
-                    backgroundColor: (theme) => theme.palette.primary.main,
+                    backgroundColor: (theme) => theme.palette.secondary.dark,
                   }}
                   key={column.id}
                   align={column.align}
@@ -124,7 +124,7 @@ export const Page3 = () => {
       </TableContainer>
       <TablePagination
         sx={{
-          backgroundColor: (theme) => theme.palette.primary.dark,
+          backgroundColor: (theme) => theme.palette.secondary.dark,
         }}
         rowsPerPageOptions={[10, 25, 100]}
         component="div"

@@ -21,8 +21,13 @@ export const ChatDrawer = () => {
       anchor={"right"}
       open={openDrawerChat}
       onClose={onToogleDrawerChat}
+      sx={(theme) => ({
+        zIndex: theme.zIndex.drawer + 4,
+      })}
       PaperProps={{
-        sx: { backgroundColor: (theme) => theme.palette.secondary.dark },
+        sx: (theme) => ({
+          backgroundColor: theme.palette.secondary.dark,
+        }),
       }}
     >
       <Box
