@@ -12,6 +12,9 @@ export const AppRouter = () => {
     onStartSheckAuthToken();
   }, []);
 
+  if (status === "checking") {
+    return "CARGANDO"
+  }
   return (
     <Routes>
       {status === "authenticated" ? (

@@ -1,20 +1,20 @@
 import { useLocation } from "react-router-dom";
-import { Messages } from "./Components";
 
-import "./index.css";
 import { useCallback, useEffect } from "react";
 
 import queryString from "query-string";
-import { useChatStore } from "../../../hooks";
 import { chatApi } from "../../../api";
-export const Chat = () => {
+import { scrollToBottomAnimated } from "../../helpers";
+
+import { IncomingMessage, OutgoingMessage, SendMessage } from "./Components";
+import { useChatStore, useAuthStore } from "../../../hooks";
+import { Box, Divider, Typography } from "@mui/material";
+
+export const ChatPage = () => {
   const { onSelectChat, oneGetMensajes } = useChatStore();
   const location = useLocation();
 
-  const {
-    uid = "",
-    // name = ""
-  } = queryString.parse(location.search) as {
+  const { uid = "", name = "" } = queryString.parse(location.search) as {
     uid: string;
     name: string;
   };
@@ -30,8 +30,53 @@ export const Chat = () => {
       getChat(uid);
     }
   }, [uid]);
+  const { mensajes } = useChatStore();
+  const { user } = useAuthStore();
+  useEffect(() => {
+    if (mensajes.length !== 0) {
+      scrollToBottomAnimated("mensajes");
+    }
+  }, [mensajes]);
 
-  return <Messages />;
+  return (
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: "space-between",
+        flexDirection: "column",
+        height: `100%`,
+      }}
+    >
+      <Typography
+        variant="subtitle2"
+        sx={{ fontSize: { xs: "1.5rem", md: "2.5rem" } }}
+        color="primary"
+        textAlign={"center"}
+        fontWeight={"700"}
+      >
+        {name}
+      </Typography>
+      <Divider />
+      <Box
+        sx={{
+          flexGrow: 1,
+          overflow: "auto",
+        }}
+        id="mensajes"
+      >
+        {mensajes.map((msg) =>
+          user.uid === msg.para ? (
+            <IncomingMessage msg={msg} key={msg._id} />
+          ) : (
+            <OutgoingMessage msg={msg} key={msg._id} />
+          )
+        )}
+
+        {/* <!-- Historia Fin --> */}
+      </Box>
+      <SendMessage name={name} />
+    </Box>
+  );
 };
 
-export default Chat;
+export default ChatPage;

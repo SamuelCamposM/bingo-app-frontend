@@ -1,28 +1,24 @@
 import * as React from "react";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import Menu from "@mui/material/Menu";
-import MenuIcon from "@mui/icons-material/Menu";
-import Container from "@mui/material/Container";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
-import MenuItem from "@mui/material/MenuItem";
-import AdbIcon from "@mui/icons-material/Adb";
-import { useAuthStore, useUiStore } from "../../../hooks";
+import {
+  Box,
+  Toolbar,
+  IconButton,
+  Typography,
+  Container,
+  Avatar,
+  Button,
+  Tooltip,
+  MenuItem,
+  Menu,
+} from "@mui/material";
+import { LogoDev, MenuTwoTone } from "@mui/icons-material";
+import { useAuthStore } from "../../../hooks";
 import { NavLink } from "react-router-dom";
 import { routes } from "../../router/routes";
-import { useProvideSocket } from "../../../hooks/socket/useProvideSocket";
-
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+import { AppBarHeader } from "./styled";
 
 export const Appbar = () => {
-  const { online } = useProvideSocket();
-  const { onStartLogout, user } = useAuthStore();
-  const { onToogleDrawerChat } = useUiStore();
+  const { onStartLogout } = useAuthStore();
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
@@ -46,37 +42,24 @@ export const Appbar = () => {
   };
 
   return (
-    <AppBar position="static">
+    <AppBarHeader position="sticky">
       <Container maxWidth="xl">
-        <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="/"
-            sx={{
-              mr: 2,
-              display: { xs: "none", md: "flex" },
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
-            }}
-          >
-            {user.name} {online ? "online" : "off - online"}
+        <Toolbar disableGutters className="toolbar">
+          <LogoDev className="logoEmpresaDesktop" />
+
+          <Typography variant="h6" noWrap className="textoEmpresaDesktop">
+            EMPRESA
           </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+          <Box className="boxMenuMobile">
             <IconButton
               size="large"
               aria-label="account of current user"
               aria-controls="menu-appbar"
               aria-haspopup="true"
               onClick={handleOpenNavMenu}
-              color="inherit"
+              className="botonMenuMobile"
             >
-              <MenuIcon />
+              <MenuTwoTone />
             </IconButton>
             <Menu
               id="menu-appbar"
@@ -92,9 +75,6 @@ export const Appbar = () => {
               }}
               open={Boolean(anchorElNav)}
               onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: "block", md: "none" },
-              }}
             >
               {routes
                 .filter(({ ocultar }) => !ocultar)
@@ -105,37 +85,13 @@ export const Appbar = () => {
                     </MenuItem>
                   </NavLink>
                 ))}
-              <MenuItem onClick={handleCloseNavMenu}>
-                <Typography textAlign="center">Chat</Typography>
-              </MenuItem>
             </Menu>
           </Box>
-          <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href="/"
-            sx={{
-              mr: 2,
-              display: { xs: "flex", md: "none" },
-              flexGrow: 1,
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
-            }}
-          >
-            LOGO
+          <LogoDev className="logoEmpresaMobile" />
+          <Typography variant="h5" noWrap className="textoEmpresaMobile">
+            EMPRESA
           </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            <Button
-              sx={{ my: 2, color: "white", display: "block" }}
-              onClick={onToogleDrawerChat}
-            >
-              Chat
-            </Button>
+          <Box className="boxMenuDesktop">
             {routes
               .filter(({ ocultar }) => !ocultar)
               .map(({ to, name }) => (
@@ -145,9 +101,7 @@ export const Appbar = () => {
                   key={name}
                   to={to}
                 >
-                  <Button sx={{ my: 2, color: "white", display: "block" }}>
-                    {name}
-                  </Button>
+                  <Button className="enlaceBotonDesktop">{name}</Button>
                 </NavLink>
               ))}
           </Box>
@@ -173,15 +127,15 @@ export const Appbar = () => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={onStartLogout}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
+              <MenuItem onClick={onStartLogout}>
+                <Typography color={"error"} textAlign="center">
+                  Logout
+                </Typography>
+              </MenuItem>
             </Menu>
           </Box>
         </Toolbar>
       </Container>
-    </AppBar>
+    </AppBarHeader>
   );
 };

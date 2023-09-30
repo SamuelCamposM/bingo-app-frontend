@@ -11,20 +11,13 @@ interface Route {
   ocultar: boolean;
 }
 
-const ChatPage = lazy(() => import("../pages/Chat/ChatPage"));
+
 const Page2 = lazy(() => import("../pages/Page2/Page2"));
 const Page3 = lazy(() => import("../pages/Page3/Page3"));
 // const Lazy2 = lazy(() => import(/* webpackChunkName: "LazyPage2" */"../01-lazyload/pages/LazyPage2"));
 // const Lazy3 = lazy(() => import(/* webpackChunkName: "LazyPage3" */"../01-lazyload/pages/LazyPage3"));
 
 export const routes: Route[] = [
-  {
-    to: "chat",
-    path: "chat",
-    Component: ChatPage,
-    name: "Chat",
-    ocultar: true,
-  },
   {
     to: "page2",
     path: "page2",

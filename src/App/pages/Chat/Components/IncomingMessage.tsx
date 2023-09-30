@@ -1,21 +1,34 @@
+import { Avatar, Box, ListItem, ListItemText } from "@mui/material";
 import { formatearFecha } from "../../../../helpers/date/formatearFecha";
 import { Mensaje } from "../../../../store/interfaces";
+import { agregarTransparencia } from "../../../../helpers";
 
 export const IncomingMessage = ({ msg }: { msg: Mensaje }) => {
   return (
-    <div className="incoming_msg">
-      <div className="incoming_msg_img">
-        <img
-          src="https://ptetutorials.com/images/user-profile.png"
-          alt="sunil"
+    <ListItem
+      disablePadding
+      sx={{ display: "flex", alignItems: "center", justifyContent: "flex-start" }}
+    >
+      <Avatar
+        src="https://ptetutorials.com/images/user-profile.png"
+        sx={{ mx: 1 }}
+      />
+      <Box
+        sx={{
+          maxWidth: "60%",
+          borderRadius: (theme) => theme.spacing(2),
+
+          margin: (theme) => `${theme.spacing(1)} ${theme.spacing(0)}`,
+          backgroundColor: (theme) =>
+            agregarTransparencia(theme.palette.primary.light, 0.2),
+        }}
+      >
+        <ListItemText
+          sx={{ px: 1 }}
+          primary={msg.mensaje}
+          secondary={formatearFecha(msg.createdAt)}
         />
-      </div>
-      <div className="received_msg">
-        <div className="received_withd_msg">
-          <p>{msg.mensaje}</p>
-          <span className="time_date">{formatearFecha(msg.createdAt)} </span>
-        </div>
-      </div>
-    </div>
+      </Box>
+    </ListItem>
   );
 };

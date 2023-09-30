@@ -1,13 +1,18 @@
+import { InputAdornment, IconButton } from "@mui/material";
 import { SocketContext } from "../../../../context";
 import { required } from "../../../../helpers";
 import { useAuthStore, useChatStore, useForm } from "../../../../hooks";
 import TextField from "@mui/material/TextField";
 import { useContext } from "react";
+import { Send } from "@mui/icons-material";
 
-export const SendMessage = () => {
+import { useEffect, useRef } from "react";
+
+export const SendMessage = ({ name }: { name: string }) => {
   const { socket } = useContext(SocketContext);
   const { user } = useAuthStore();
   const { chatActivo } = useChatStore();
+  const inputRef = useRef<HTMLInputElement>(null);
   const {
     formValues,
     handleChange,
@@ -34,28 +39,36 @@ export const SendMessage = () => {
       mensaje,
     });
   };
+  useEffect(() => {
+    console.log("focus");
+
+    inputRef.current?.select();
+  }, [name]);
+
   return (
     <form onSubmit={handleSubmit}>
-      <div className="type_msg row">
-        <div className="input_msg_write col-sm-9">
-          <TextField
-            autoComplete="false"
-            fullWidth
-            name="mensaje"
-            label="Mensaje"
-            value={mensaje}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            error={errorValues.mensaje.length > 0}
-            helperText={errorValues.mensaje.join(" - ")}
-          />
-        </div>
-        <div className="col-sm-3 text-center">
-          <button className="msg_send_btn mt-3" type="submit">
-            enviar
-          </button>
-        </div>
-      </div>
+
+      <TextField
+        autoFocus
+        inputRef={inputRef}
+        InputProps={{
+          endAdornment: (
+            <InputAdornment position="end">
+              <IconButton aria-label="Enviar" type="submit">
+                <Send color="success"></Send>
+              </IconButton>
+            </InputAdornment>
+          ),
+        }}
+        fullWidth
+        name="mensaje"
+        label="Mensaje"
+        value={mensaje}
+        onChange={handleChange}
+        onBlur={handleBlur}
+        error={errorValues.mensaje.length > 0}
+        helperText={errorValues.mensaje.join(" - ")}
+      />
     </form>
   );
 };

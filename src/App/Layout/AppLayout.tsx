@@ -1,8 +1,8 @@
-import { Appbar } from "./components";
+import { Appbar, ChatDrawer, Footer } from "./components";
 import { Suspense } from "react";
-import { ChatDrawer } from "./components/ChatDrawer";
-import Box from "@mui/material/Box";
+
 import { CssBaseline } from "@mui/material";
+import { ContentBox, LayoutBox } from "./components/styled";
 
 export const AppLayout = ({
   children,
@@ -13,27 +13,13 @@ export const AppLayout = ({
     <>
       <CssBaseline />
       <ChatDrawer />
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          flexDirection: "column",
-          height: `100vh`,
-          overflow: "hidden",
-        }}
-      >
+      <LayoutBox>
         <Appbar />
-        <Box
-          sx={{
-            flexGrow: 1,
-            overflow: "auto",
-          }}
-          pl={1}
-        >
+        <ContentBox>
           <Suspense fallback={<span>Loading...</span>}>{children}</Suspense>
-        </Box>
-        <Appbar />
-      </Box>
+        </ContentBox>
+        <Footer />
+      </LayoutBox>
     </>
   );
 };

@@ -8,7 +8,7 @@ body {
   }
 
   /* Track */
-  ::-webkit-scrollbar-track { 
+  ::-webkit-scrollbar-track {
     display: none;
   }
 

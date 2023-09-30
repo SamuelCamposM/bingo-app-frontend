@@ -10,6 +10,6 @@ export function scrollToBottom(id: string) {
 export function scrollToBottomAnimated(id: string) {
   animateScroll.scrollToBottom({
     containerId: id,
-    duration: 250,
+    duration: 100,
   });
 }
