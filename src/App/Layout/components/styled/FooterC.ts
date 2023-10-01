@@ -1,8 +1,12 @@
 import { AppBar, Theme, styled } from "@mui/material";
 
 export const AppBarFooter = styled(AppBar)(({ theme }: { theme: Theme }) => ({
-  background: theme.palette.primary.light,
+  background: "transparent", //  theme.palette.primary.main,
+
   zIndex: theme.zIndex.drawer + 1,
+  [theme.breakpoints.down("md")]: {
+    zIndex: theme.zIndex.drawer,
+  },
   ".toolbar": {
     height: theme.mixins.toolbar.minHeight,
   },

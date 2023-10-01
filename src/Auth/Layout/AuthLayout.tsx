@@ -1,12 +1,12 @@
 import { Box } from "@mui/material";
-import bgImage from "./bg.jpeg";
-import { LoginBox } from "../components/styled/LoginBox";
+import bgImage from "../../assets/dog4.jpg";
 import { memo } from "react";
+import { LoginBox } from "../components/styled/LoginBox";
 
 export const AuthLayout = memo(
   ({ children }: { children: JSX.Element | JSX.Element[] }) => {
     return (
-      <LoginBox component={"section"}>
+      <LoginBox>
         <Box className="imgBx">
           <img src={bgImage} alt="Imagen Fondo" />
         </Box>

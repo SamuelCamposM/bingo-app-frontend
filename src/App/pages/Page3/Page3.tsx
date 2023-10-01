@@ -6,13 +6,14 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
-import TableRow from "@mui/material/TableRow";
+import TableRow from "@mui/material/TableRow"; 
+// import { agregarTransparencia } from "../../../helpers";
 
 interface Column {
   id: "name" | "code" | "population" | "size" | "density";
   label: string;
   minWidth?: number;
-  align?: "right";
+  align?: "right" | "center" | "left";
   format?: (value: number) => string;
 }
 
@@ -23,14 +24,14 @@ const columns: readonly Column[] = [
     id: "population",
     label: "Population",
     minWidth: 170,
-    align: "right",
+    align: "center",
     format: (value: number) => value.toLocaleString("en-US"),
   },
   {
     id: "size",
     label: "Size\u00a0(km\u00b2)",
     minWidth: 170,
-    align: "right",
+    align: "center",
     format: (value: number) => value.toLocaleString("en-US"),
   },
   {
@@ -67,7 +68,7 @@ for (let i = 0; i < 500; i++) {
 
 export const Page3 = () => {
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(25);
+  const [rowsPerPage, setRowsPerPage] = React.useState(500);
 
   const handleChangePage = (_: unknown, newPage: number) => {
     setPage(newPage);
@@ -88,9 +89,16 @@ export const Page3 = () => {
             <TableRow>
               {columns.map((column) => (
                 <TableCell
-                  sx={{
-                    backgroundColor: (theme) => theme.palette.secondary.dark,
-                  }}
+                  // sx={{
+                  //   background: (theme) =>
+                  //     `linear-gradient(0deg, ${agregarTransparencia(
+                  //       theme.palette.primary.dark,
+                  //       1
+                  //     )}, ${agregarTransparencia(
+                  //       theme.palette.primary.light,
+                  //       1
+                  //     )});`,
+                  // }}
                   key={column.id}
                   align={column.align}
                   style={{ minWidth: column.minWidth }}
@@ -105,14 +113,27 @@ export const Page3 = () => {
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row) => {
                 return (
-                  <TableRow hover role="checkbox" key={row.name}>
+                  <TableRow
+                    hover
+                    role="checkbox"
+                    key={row.name}
+                    sx={
+                      {
+                        // background: (theme) =>
+                        //   `${agregarTransparencia(
+                        //     theme.palette.secondary.light,
+                        //     0.75
+                        //   )}`,
+                      }
+                    }
+                  >
                     {columns.map((column) => {
                       const value = row[column.id];
                       return (
                         <TableCell key={column.id} align={column.align}>
-                          {column.format && typeof value === "number"
-                            ? column.format(value)
-                            : value}
+                   
+                  
+                          {value}
                         </TableCell>
                       );
                     })}
@@ -123,10 +144,11 @@ export const Page3 = () => {
         </Table>
       </TableContainer>
       <TablePagination
-        sx={{
-          backgroundColor: (theme) => theme.palette.secondary.dark,
-        }}
-        rowsPerPageOptions={[10, 25, 100]}
+        // sx={{
+        //   background: (theme) =>
+        //     `${agregarTransparencia(theme.palette.primary.dark, 1)}`,
+        // }}
+        rowsPerPageOptions={[10, 25, 100, 500]}
         component="div"
         count={rows.length}
         rowsPerPage={rowsPerPage}

@@ -15,7 +15,7 @@ import { AppBarHeader } from "./styled";
 
 export const Appbar = () => {
   const { onStartLogout } = useAuthStore();
-  const { onToogleSidebarChat } = useUiStore();
+  const { onToogleSidebar, onToogleSidebarMobile } = useUiStore();
 
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
@@ -40,15 +40,25 @@ export const Appbar = () => {
         }}
       >
         <IconButton
+          sx={{ display: { md: "none", xs: "block" } }}
           size="large"
           aria-label="account of current user"
           aria-controls="menu-appbar"
           aria-haspopup="true"
-          onClick={onToogleSidebarChat}
+          onClick={onToogleSidebarMobile}
         >
           <MenuTwoTone />
         </IconButton>
-
+        <IconButton
+          sx={{ display: { md: "block", xs: "none" } }}
+          size="large"
+          aria-label="account of current user"
+          aria-controls="menu-appbar"
+          aria-haspopup="true"
+          onClick={onToogleSidebar}
+        >
+          <MenuTwoTone />
+        </IconButton>
         <Box className="boxEmpresa">
           <LogoDev className="logoEmpresa" />
           <Typography variant="h6" noWrap className="textoEmpresa">

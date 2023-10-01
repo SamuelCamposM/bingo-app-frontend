@@ -1,53 +1,33 @@
 import {
   Box,
-  Divider,
-  Drawer,
   IconButton,
   List,
   ListItem,
   ListItemButton,
   ListItemIcon,
   ListItemText,
-  Toolbar,
   Tooltip,
 } from "@mui/material";
 import { ExpandMore, Inbox, Mail } from "@mui/icons-material";
 import { routes } from "../../router/routes";
-import { useUiStore } from "../../../hooks";
 import { NavLink } from "react-router-dom";
-
-const drawerWidthClose = 97;
-const drawerWidthOpen = 240;
-export const DrawerSidebar = () => {
-  const { openDrawerSidebar } = useUiStore();
+export const ListSidebar = ({ openSidebar = true }) => {
   return (
-    <Drawer
-      variant="permanent"
-      sx={{
-        transitionDuration: ".3s",
-        transitionProperty: "width",
-        width: openDrawerSidebar ? drawerWidthOpen : drawerWidthClose,
-        flexShrink: 0,
-        [`& .MuiDrawer-paper`]: {
-          transitionDuration: ".3s",
-          transitionProperty: "width",
-          width: openDrawerSidebar ? drawerWidthOpen : drawerWidthClose,
-          boxSizing: "border-box",
-        },
-      }}
-    >
-      <Toolbar />
-      <Box sx={{ overflow: "auto" }}>
-        <List>
-          {routes.map(({ name, path }, index) => (
-            <Tooltip key={name} title={name} followCursor placement="right">
+    <Box sx={{ overflow: "auto" }}>
+      <List>
+        {routes.map(
+          ({ name, path }, index) => (
+            <Tooltip key={index} title={name} followCursor placement="right">
               <ListItem disablePadding>
                 <NavLink
-                  style={{ width: "100%" }}
+                  style={{
+                    width: "100%",
+                    textDecoration: "none",
+                  }}
                   to={path}
                   className={({ isActive }) => {
                     if (isActive) {
-                      return "red";
+                      return "grey";
                     }
                   }}
                 >
@@ -64,7 +44,7 @@ export const DrawerSidebar = () => {
                     </ListItemIcon>
                     <ListItemText
                       sx={{ padding: 0, margin: 0 }}
-                      primary={openDrawerSidebar ? name : ""}
+                      primary={openSidebar ? name : ""}
                     />
                   </ListItemButton>
                 </NavLink>
@@ -72,7 +52,7 @@ export const DrawerSidebar = () => {
                   sx={{
                     display: "flex",
                     justifyContent: "center",
-                    p: 1,
+                    p: 0.75,
                     margin: 0,
                   }}
                 >
@@ -80,10 +60,9 @@ export const DrawerSidebar = () => {
                 </IconButton>
               </ListItem>
             </Tooltip>
-          ))}
-        </List>
-        <Divider />
-      </Box>
-    </Drawer>
+          )
+        )}
+      </List>
+    </Box>
   );
 };

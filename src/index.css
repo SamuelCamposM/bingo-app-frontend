@@ -24,6 +24,8 @@ body {
   }
 }
 
-.red{ 
-  background-color: red;
+.grey{ 
+  background: grey;
+  transition-property: background;
+  transition-duration: .5s;
 }

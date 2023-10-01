@@ -1,15 +1,22 @@
-import { Appbar, ChatDrawer, Footer } from "./components";
+import {
+  Appbar,
+  ChatDrawer,
+  DrawerSidebarDesktop,
+  DrawerSidebarMobile,
+  Footer,
+} from "./components";
 import { Suspense } from "react";
 
-import { CssBaseline } from "@mui/material";
+import { CssBaseline, useMediaQuery, useTheme } from "@mui/material";
 import { ContentBox, LayoutBox } from "./components/styled";
-import { DrawerSidebar } from "./components/DrawerSidebar";
 
 export const AppLayout = ({
   children,
 }: {
   children: JSX.Element | JSX.Element[];
 }) => {
+  const theme = useTheme();
+  const isMdDown = useMediaQuery(theme.breakpoints.down("md"));
   return (
     <>
       <CssBaseline />
@@ -21,7 +28,8 @@ export const AppLayout = ({
             flexDirection: "row",
           }}
         >
-          <DrawerSidebar />
+          {isMdDown ? <DrawerSidebarMobile /> : <DrawerSidebarDesktop />}
+
           <ContentBox>
             <Suspense fallback={<span>Loading...</span>}>{children}</Suspense>
           </ContentBox>
