@@ -8,7 +8,8 @@ import { scrollToBottomAnimated } from "../../helpers";
 
 import { IncomingMessage, OutgoingMessage, SendMessage } from "./Components";
 import { useChatStore, useAuthStore } from "../../../hooks";
-import { Box, Divider, Typography } from "@mui/material";
+import { Divider } from "@mui/material";
+import { BoxChat, TypographyChatActive } from "./style";
 
 export const ChatPage = () => {
   const { onSelectChat, oneGetMensajes } = useChatStore();
@@ -40,23 +41,18 @@ export const ChatPage = () => {
 
   return (
     <>
-      <Typography
-        variant="subtitle2"
-        sx={{ fontSize: { xs: "1.5rem", md: "2.5rem" } }}
-        color="primary"
-        textAlign={"center"}
-        fontWeight={"700"}
-      >
-        {name}
-      </Typography>
-      <Divider />
-      <Box
-        sx={{
-          flexGrow: 1,
-          overflow: "auto",
-        }}
-        id="mensajes"
-      >
+      <Divider>
+        <TypographyChatActive
+          variant="subtitle2"
+          color="primary"
+          textAlign={"center"}
+          fontWeight={"700"}
+        >
+          {name}
+        </TypographyChatActive>
+      </Divider>
+
+      <BoxChat id="mensajes">
         {mensajes.map((msg) =>
           user.uid === msg.para ? (
             <IncomingMessage msg={msg} key={msg._id} />
@@ -66,7 +62,7 @@ export const ChatPage = () => {
         )}
 
         {/* <!-- Historia Fin --> */}
-      </Box>
+      </BoxChat>
       <SendMessage name={name} />
     </>
   );

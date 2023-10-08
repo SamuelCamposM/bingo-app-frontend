@@ -7,8 +7,8 @@ import {
 } from "./components";
 import { Suspense, useEffect } from "react";
 
-import { Box, CssBaseline, useMediaQuery, useTheme } from "@mui/material";
-import { ContentBox, LayoutBox } from "./components/styled";
+import { CssBaseline, useMediaQuery, useTheme } from "@mui/material";
+import { ContentBox, LayoutBox, LayoutBox2 } from "./components/styled";
 import { MigasDePan } from "./components/MigasDePan";
 import { useMenuStore } from "../../hooks";
 
@@ -30,28 +30,15 @@ export const AppLayout = ({
       <ChatDrawer />
       <LayoutBox>
         <Appbar />
-        <LayoutBox
-          sx={{
-            flexDirection: "row",
-          }}
-        >
+        <LayoutBox className="row">
           {isMdDown ? <DrawerSidebarMobile /> : <DrawerSidebarDesktop />}
 
           <ContentBox>
             <Suspense fallback={<span>Loading...</span>}>
-              <Box
-                sx={{
-                  width: "100%",
-                  height: "100%",
-                  display: "flex",
-                  justifyContent: "space-between",
-                  flexDirection: "column",
-                  overflow: "auto",
-                }}
-              >
+              <LayoutBox2>
                 <MigasDePan />
                 {children}
-              </Box>
+              </LayoutBox2>
             </Suspense>
           </ContentBox>
         </LayoutBox>

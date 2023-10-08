@@ -23,7 +23,7 @@ export const Footer = () => {
           </IconButton>
         </Box>
         <Box className="boxOnline">
-          <Typography variant="h6" sx={{ mr: 1 }}>
+          <Typography variant="h6" className="Typography">
             {user.name}
           </Typography>
           <OnlinePrediction color={online ? "success" : "error"} />

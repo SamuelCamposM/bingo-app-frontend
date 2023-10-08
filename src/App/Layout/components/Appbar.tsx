@@ -8,6 +8,7 @@ import {
   Tooltip,
   MenuItem,
   Menu,
+  useMediaQuery,
 } from "@mui/material";
 import { LogoDev, MenuTwoTone } from "@mui/icons-material";
 import { useAuthStore, useUiStore } from "../../../hooks";
@@ -27,38 +28,33 @@ export const Appbar = () => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+  const isMdDown = useMediaQuery((theme: any) => theme.breakpoints.down("md"));
 
   return (
     <AppBarHeader position="sticky">
-      <Toolbar
-        disableGutters
-        className="toolbar"
-        sx={{
-          display: "flex",
-          width: "100%",
-          justifyContent: "space-between",
-        }}
-      >
-        <IconButton
-          sx={{ display: { md: "none", xs: "block" } }}
-          size="large"
-          aria-label="account of current user"
-          aria-controls="menu-appbar"
-          aria-haspopup="true"
-          onClick={onToogleSidebarMobile}
-        >
-          <MenuTwoTone />
-        </IconButton>
-        <IconButton
-          sx={{ display: { md: "block", xs: "none" } }}
-          size="large"
-          aria-label="account of current user"
-          aria-controls="menu-appbar"
-          aria-haspopup="true"
-          onClick={onToogleSidebar}
-        >
-          <MenuTwoTone />
-        </IconButton>
+      <Toolbar disableGutters className="toolbar">
+        {isMdDown ? (
+          <IconButton
+            size="large"
+            aria-label="account of current user"
+            aria-controls="menu-appbar"
+            aria-haspopup="true"
+            onClick={onToogleSidebarMobile}
+          >
+            <MenuTwoTone />
+          </IconButton>
+        ) : (
+          <IconButton
+            size="large"
+            aria-label="account of current user"
+            aria-controls="menu-appbar"
+            aria-haspopup="true"
+            onClick={onToogleSidebar}
+          >
+            <MenuTwoTone />
+          </IconButton>
+        )}
+
         <Box className="boxEmpresa">
           <LogoDev className="logoEmpresa" />
           <Typography variant="h6" noWrap className="textoEmpresa">
