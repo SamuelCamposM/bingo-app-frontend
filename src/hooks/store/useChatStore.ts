@@ -26,7 +26,7 @@ export const useChatStore = () => {
     dispatch(onSliceGetMensajes(mensajes));
   };
   return {
-    //*Propiedades
+    //Propiedades
     usuarios,
     chatActivo,
     mensajes,

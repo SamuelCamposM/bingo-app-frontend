@@ -1,9 +1,10 @@
-import { UiState } from ".";
+import { MenuState, UiState } from ".";
 import { AuthState } from "./auth";
 import { ChatState } from "./chat";
 
 export interface RootState {
   auth: AuthState;
   chat: ChatState;
-  ui:UiState
+  ui: UiState;
+  menu: MenuState;
 }

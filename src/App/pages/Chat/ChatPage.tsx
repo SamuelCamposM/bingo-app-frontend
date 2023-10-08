@@ -39,14 +39,7 @@ export const ChatPage = () => {
   }, [mensajes]);
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        justifyContent: "space-between",
-        flexDirection: "column",
-        height: `100%`,
-      }}
-    >
+    <>
       <Typography
         variant="subtitle2"
         sx={{ fontSize: { xs: "1.5rem", md: "2.5rem" } }}
@@ -75,7 +68,7 @@ export const ChatPage = () => {
         {/* <!-- Historia Fin --> */}
       </Box>
       <SendMessage name={name} />
-    </Box>
+    </>
   );
 };
 

@@ -9,6 +9,7 @@ export interface User {
   email: string;
   online: Boolean;
   uid: string;
+  roles: string[];
 }
 // FUNCIONES
 export interface LoginParams {

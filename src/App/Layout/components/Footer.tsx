@@ -1,5 +1,5 @@
 import { Box, Toolbar, Typography, IconButton, Badge } from "@mui/material";
-import { Chat, SignalWifiOff, Wifi } from "@mui/icons-material";
+import { Chat, OnlinePrediction } from "@mui/icons-material";
 import { useAuthStore, useUiStore } from "../../../hooks";
 import { useProvideSocket } from "../../../hooks/socket/useProvideSocket";
 import { AppBarFooter } from "./styled";
@@ -26,7 +26,7 @@ export const Footer = () => {
           <Typography variant="h6" sx={{ mr: 1 }}>
             {user.name}
           </Typography>
-          {online ? <Wifi color="success" /> : <SignalWifiOff color="error" />}
+          <OnlinePrediction color={online ? "success" : "error"} />
         </Box>
       </Toolbar>
     </AppBarFooter>

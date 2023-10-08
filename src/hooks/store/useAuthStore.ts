@@ -80,7 +80,7 @@ export const useAuthStore = () => {
   };
 
   return {
-    //*Propiedades
+    //Propiedades
     status,
     user,
     errorMessage,

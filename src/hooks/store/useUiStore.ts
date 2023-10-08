@@ -24,11 +24,11 @@ export const useUiStore = () => {
   };
 
   return {
-    // PROPIEDADES
+    //Propiedades
     openDrawerChat,
     openDrawerSidebar,
     openDrawerSidebarMobile,
-    // METODOS
+    //Metodos
     onToogleDrawerChat,
     onToogleSidebar,
     onToogleSidebarMobile,
